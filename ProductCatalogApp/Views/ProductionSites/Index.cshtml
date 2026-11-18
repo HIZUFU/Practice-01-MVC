@@ -9,6 +9,10 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form method="get" class="d-flex gap-2 mb-3">
+    <input name="search" value="@ViewData["Search"]" class="form-control" placeholder="Название участка" />
+    <button class="btn btn-outline-primary">Найти</button>
+</form>
 <table class="table">
     <thead>
         <tr>

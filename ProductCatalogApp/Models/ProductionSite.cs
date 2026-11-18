@@ -1,5 +1,3 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-
 namespace ProductCatalogApp.Models
 {
     public class ProductionSite
@@ -10,6 +8,6 @@ namespace ProductCatalogApp.Models
 
         public string Description { get; set; } = string.Empty;
 
-         public List<Equipment>? EquipmentItems { get; set; } = new();
+        public List<Equipment> EquipmentItems { get; set; } = new();
     }
 }

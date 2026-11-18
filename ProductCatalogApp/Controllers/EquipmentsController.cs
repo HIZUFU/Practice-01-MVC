@@ -67,6 +67,9 @@ public class EquipmentsController : Controller
         [Bind("Id,Name,Model,InventoryNumber,ProductionSiteId")]
         Equipment equipment)
     {
+        if (!await _context.ProductionSites.AnyAsync(site => site.Id == equipment.ProductionSiteId))
+            ModelState.AddModelError(nameof(equipment.ProductionSiteId), "Выберите существующий участок.");
+
         if (ModelState.IsValid)
         {
             _context.Add(equipment);
@@ -112,6 +115,9 @@ public class EquipmentsController : Controller
         {
             return NotFound();
         }
+
+        if (!await _context.ProductionSites.AnyAsync(site => site.Id == equipment.ProductionSiteId))
+            ModelState.AddModelError(nameof(equipment.ProductionSiteId), "Выберите существующий участок.");
 
         if (ModelState.IsValid)
         {

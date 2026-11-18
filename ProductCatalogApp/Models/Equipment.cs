@@ -1,4 +1,4 @@
-﻿namespace ProductCatalogApp.Models
+namespace ProductCatalogApp.Models
 {
     public class Equipment
     {

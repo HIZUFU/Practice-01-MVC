@@ -14,9 +14,13 @@ public class ProductionSitesController : Controller
     }
 
     // GET: PRODUCTIONSITES
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index(string? search)    
     {
-        return View(await _context.ProductionSites.ToListAsync());
+        ViewData["Search"] = search;
+        var query = _context.ProductionSites.AsNoTracking();
+        if (!string.IsNullOrWhiteSpace(search))
+            query = query.Where(site => EF.Functions.Like(site.Name, $"%{search.Trim()}%"));
+        return View(await query.OrderBy(site => site.Name).ToListAsync());
     }
 
     // GET: PRODUCTIONSITES/Details/5
@@ -50,7 +54,7 @@ public class ProductionSitesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Description,EquipmentItems")] ProductionSite productionsite)
+    public async Task<IActionResult> Create([Bind("Id,Name,Description")] ProductionSite productionsite)
     {
         if (ModelState.IsValid)
         {
@@ -82,7 +86,7 @@ public class ProductionSitesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Name,Description,EquipmentItems")] ProductionSite productionsite)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,Name,Description")] ProductionSite productionsite)
     {
         if (id != productionsite.Id)
         {
