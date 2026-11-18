@@ -56,6 +56,7 @@ public class ProductionSitesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Id,Name,Description")] ProductionSite productionsite)
     {
+        productionsite.Description = productionsite.Description?.Trim() ?? string.Empty;
         if (ModelState.IsValid)
         {
             _context.Add(productionsite);
@@ -93,6 +94,7 @@ public class ProductionSitesController : Controller
             return NotFound();
         }
 
+        productionsite.Description = productionsite.Description?.Trim() ?? string.Empty;
         if (ModelState.IsValid)
         {
             try
